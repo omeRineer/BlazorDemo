@@ -1,0 +1,56 @@
+﻿@page "/products"
+@inject HttpClient Http
+@inject ICategoryService categoryService
+@inject IProductService productService
+
+@if (products == null && categories == null)
+{
+    <h1 class="text-center">Loading...</h1>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                @foreach (var category in categories)
+                {
+                    <NavLink class="list-group-item list-group-item-action">@category.CategoryName</NavLink>
+                }
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                @foreach (var product in products)
+                {
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-header">
+                                --
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@product.ProductName</h5>
+                                <p class="card-text">@product.UnitPrice</p>
+                                <NavLink href="@($"products/{product.Id}")" class="btn btn-success">Detail</NavLink>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+@code {
+    List<Product> products;
+    List<Category> categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await productService.GetAll();
+        categories = await categoryService.GetAll();
+    }
+
+}

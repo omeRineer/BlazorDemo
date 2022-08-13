@@ -1,0 +1,40 @@
+﻿@page "/products/{id:int}"
+@inject HttpClient Http
+@inject IProductService productService
+
+
+
+@if (product==null)
+{
+<div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden"></span>
+    </div>
+</div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-8">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHw%3D&w=1000&q=80" style="width:100%" alt="Alternate Text" />
+        </div>
+        <div class="col-md-4">
+            <h4>@product.ProductName</h4>
+            <h4>@product.UnitPrice</h4>
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Product product;
+
+    protected override async Task OnInitializedAsync()
+    {
+        product =await productService.GetById(Id);
+    }
+
+}
