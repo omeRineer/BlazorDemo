@@ -1,0 +1,33 @@
+﻿@page "/productadd"
+@inject IProductService productService
+<EditForm Model="@product" OnValidSubmit="@Add">
+    <label>Product Name</label>
+    <InputText @bind-Value="product.ProductName"></InputText>
+
+    <label>Unit Price</label>
+    <InputNumber @bind-Value="product.UnitPrice"></InputNumber>
+
+    <button type="submit">Save Product</button>
+</EditForm>
+
+<h1>State : @state</h1>
+
+@code {
+    private Product product = new();
+
+    bool state;
+
+    private void Add()
+    {
+        var result=productService.Add(product);
+        if (!result.Result)
+        {
+            state = false;
+        }
+        else
+        {
+            state = true;
+        }
+    }
+
+}

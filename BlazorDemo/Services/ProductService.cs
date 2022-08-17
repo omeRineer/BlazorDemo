@@ -25,5 +25,15 @@ namespace BlazorDemo.Services
         {
             return await _httpClient.GetFromJsonAsync<Product>(Url + id);
         }
+
+        public async Task<bool> Add(Product product)
+        {
+            var result = await _httpClient.PostAsJsonAsync(Url, product);
+            if (!result.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

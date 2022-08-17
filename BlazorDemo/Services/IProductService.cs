@@ -8,5 +8,6 @@ namespace BlazorDemo.Services
     {
         Task<List<Product>> GetAll();
         Task<Product> GetById(int id);
+        Task<bool> Add(Product product);
     }
 }
